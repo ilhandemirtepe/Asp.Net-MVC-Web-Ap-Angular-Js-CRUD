@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Products List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts {
+
+    <link href="~/Content/CustomStyle.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/AngularDemo.js"></script>
+}
+
+<div ng-app="demoModule" id="body">   @*ng-app:Modulu çağır*@
+    <div ng-controller="demoCtrl">    @*ng-controller:Controler çağır*@
+        <h2>AngularJS,MVC5,WEB API CRUD</h2>
+
+        <h3>Ürün Listeleme</h3>
+
+        <table ng-cloak>
+            <thead>
+                <tr>
+                    <th style="display: none;">id</th>
+                    <th>Adı</th>
+                    <th>Fiyat</th>
+                    <th>Düzenle-Sil</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="items in productsData">
+                    <td hidden="hidden">{{items.Id}}</td>
+                    <td>{{items.Name}}</td>
+                   
+                    <td>{{items.Price | currency:'&#8377;':2}}</td>
+                    <td>
+                        <button ng-model="$scope.Product" ng-click="edit(productsData[$index])">Düzenle</button>
+                        <button ng-click="delete($index)">Sil</button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6">
+                        <hr />
+                    </td>
+                </tr>
+                <tr>
+                    <td>Toplam :</td>
+                    <td></td>
+                    <td><label ng-bind="total() | currency:'&#8377;':2"></label></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+        <br />
+          <br />
+
+        <div ng-show="Product.Id != '' ">
+            <div>
+                <h2>Ürün Güncelle</h2>
+            </div>
+            <div hidden="hidden">
+                <label for="id">Id</label>
+                <input type="text" data-ng-model="Product.Id" />
+            </div>
+            <div>
+                <label for="name">Ürün Adı</label>
+                <input type="text" data-ng-model="Product.Name" />
+            </div>
+
+           
+
+            <div>
+                <label for="price">Ürün Fiyatı</label>
+                <input type="text" data-ng-model="Product.Price" />
+            </div>
+            <br />
+            <div>
+                <button data-ng-click="update()">Update</button>
+                <button data-ng-click="cancel()">Cancel</button>
+            </div>
+        </div> @**Ürün Güncelle divi*@
+
+        <div ng-hide="Product.Id != '' ">
+            <div>
+                <h2>Yeni Ürün Ekle</h2>
+            </div>
+            <div>
+                <label for="name"> Ürün Adı</label>
+                <input type="text" data-ng-model="Product.Name" />
+            </div>
+
+           
+            <div>
+                <label for="price">Ürün Fiyatı</label>
+                <input type="text" data-ng-model="Product.Price" />
+            </div>
+            <br />
+            <div>
+                <button data-ng-click="save()">Kaydet</button>
+                <button data-ng-click="clear()">Temizle</button>
+            </div>
+        </div> @*Yeni ürün ekleme divi*@
+    </div>
+</div>
